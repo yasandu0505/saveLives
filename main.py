@@ -45,24 +45,3 @@ async def signup_donor(donor: Donor):
         }
 
 
-@app.post("/signup/bloodbank")
-async def signup_bloodbank(bloodbank: BloodBank):
-    """Signup endpoint for blood banks"""
-    try:
-        user = authentication_service.signup_bloodbank(bloodbank)
-        return {
-            "message": "Blood bank signed up successfully", 
-            "status_code": 200,
-            "data": {
-                "user": user,
-                "user_type": user["kind"]["minor"]
-            }
-        }
-    except Exception as e:
-        return {
-            "message": "Failed to sign up blood bank",
-            "status_code": 500,
-            "data": {
-                "error": str(e)
-            }
-        }
