@@ -2,7 +2,7 @@ from .config import UPDATE_API
 from datetime import datetime
 import requests
 
-def create_donor_node(name: str, email: str, phone_number: str, nic: str, user_name: str, user_type: str, password: str):
+def create_donor_node(name: str, email: str, phone_number: str, nic: str, user_name: str, user_type: str, hashed_password: str):
     url = f"{UPDATE_API}/entities/"
     headers = {
         "Content-Type": "application/json"
@@ -32,7 +32,7 @@ def create_donor_node(name: str, email: str, phone_number: str, nic: str, user_n
                             "value": {
                                 "columns": ["user_id", "email", "phone_number", "nic", "password"],
                                     "rows": [
-                                        [user_name, email, phone_number, nic, password],
+                                        [user_name, email, phone_number, nic, hashed_password],
                                     ]
                             }
                         }
