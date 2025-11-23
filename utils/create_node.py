@@ -23,7 +23,7 @@ def create_donor_node(name: str, email: str, phone_number: str, nic: str, user_n
             "metadata": [],
             "attributes": [
                 {
-                "key": "Donor Data",
+                "key": user_name,
                 "value": {
                     "values": [
                         {

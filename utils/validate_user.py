@@ -40,4 +40,25 @@ def validate_donor(user_name: str) -> Tuple[bool, Optional[dict]]:
     except Exception as e:
         print("error : " +  str(e))
         return (False, None)
+
+def get_donor_data(user_name: str) -> Optional[dict]:
+    """
+    Get donor data by username.
+    Returns: Optional[dict]
+    - If found: user_dict
+    - If not found: None
+    """
+    url = f"{QUERY_API}/v1/entities/{user_name}/attributes/{user_name}"
+    
+    headers = {
+        "Content-Type": "application/json"
+    }
+    try:
+        response = requests.get(url, headers=headers)
+        response.raise_for_status()  
+        output = response.json()
+        return output
+    except Exception as e:
+        print("error : " +  str(e))
+        return None
     

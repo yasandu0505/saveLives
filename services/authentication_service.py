@@ -1,5 +1,5 @@
 from models import Donor
-from utils import create_donor_node, validate_donor
+from utils import create_donor_node, validate_donor, get_donor_data
 import bcrypt
 
 class AuthenticationService:
@@ -21,10 +21,9 @@ class AuthenticationService:
         if not is_valid or not user:
             raise Exception(f"Invalid username")
         
-        # TODO: Verify password from user attributes
-        # The password should be in user["attributes"] array
-        # Need to find the password attribute and compare with bcrypt
-        
+        donor_data_output = get_donor_data(user_name)
+        donor_data = donor_data_output["value"]
+        print(donor_data)
+    
         return user
-
         
