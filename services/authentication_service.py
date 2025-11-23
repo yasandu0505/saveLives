@@ -12,4 +12,9 @@ class AuthenticationService:
         node = create_donor_node(donor.name, donor.email, donor.phone_number, donor.nic, donor.user_name, user_type, hashed_password_str)
         return node
 
-       
+    def login_donor(self, user_name: str, password: str):
+        """Login a donor user - validates username and password"""
+        
+        
+
+        

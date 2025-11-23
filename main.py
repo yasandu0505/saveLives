@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from models import Donor, BloodBank
+from models import Donor, DonorLogin
 from services import AuthenticationService
 
 
@@ -43,5 +43,25 @@ async def signup_donor(donor: Donor):
                 "error": str(e)
             }
         }
-
+        
+        
+@app.post("/login/donor")
+async def login_donor(login_data: DonorLogin):
+    """Login endpoint for donors - requires only username and password"""
+    try:
+        # TODO: Implement login logic in authentication_service
+        result = authentication_service.login_donor(login_data.user_name, login_data.password)
+        return {
+            "message": "Donor logged in successfully",
+            "status_code": 200,
+            "data": result
+        }
+    except Exception as e:
+        return {
+            "message": "Failed to login donor",
+            "status_code": 401,
+            "data": {
+                "error": str(e)
+            }
+        }
 

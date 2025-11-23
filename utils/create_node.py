@@ -30,7 +30,7 @@ def create_donor_node(name: str, email: str, phone_number: str, nic: str, user_n
                             "startTime": datetime.now().isoformat(),
                             "endTime": "",
                             "value": {
-                                "columns": ["user_id", "email", "phone_number", "nic", "password"],
+                                "columns": ["user_name", "email", "phone_number", "nic", "password"],
                                     "rows": [
                                         [user_name, email, phone_number, nic, hashed_password],
                                     ]
