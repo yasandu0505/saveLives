@@ -49,7 +49,6 @@ async def signup_donor(donor: Donor):
 async def login_donor(login_data: DonorLogin):
     """Login endpoint for donors - requires only username and password"""
     try:
-        # TODO: Implement login logic in authentication_service
         result = authentication_service.login_donor(login_data.user_name, login_data.password)
         return {
             "message": "Donor logged in successfully",
