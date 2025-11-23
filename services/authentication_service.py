@@ -1,5 +1,5 @@
 from models import Donor
-from utils import create_donor_node, validate_donor, get_donor_data
+from utils import create_donor_node, validate_donor, get_donor_data, decode_protobuf_string
 import bcrypt
 
 class AuthenticationService:
@@ -23,7 +23,17 @@ class AuthenticationService:
         
         donor_data_output = get_donor_data(user_name)
         donor_data = donor_data_output["value"]
-        print(donor_data)
-    
+        
+        if not donor_data:
+            raise Exception(f"Failed to retrieve donor data")
+                
+        # Decode the protobuf string
+        decoded_string = decode_protobuf_string(donor_data)
+        
+        if not decoded_string:
+            raise Exception(f"Failed to decode donor data")
+        
+        print(decoded_string)
+        
         return user
         
