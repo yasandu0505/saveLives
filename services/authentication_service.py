@@ -1,5 +1,5 @@
 from models import Donor
-from utils import create_donor_node, validate_donor, get_donor_data, decode_protobuf_string
+from utils import create_donor_node, validate_donor, get_donor_data, decode_protobuf_string, generate_token
 import bcrypt
 import json
 
@@ -51,25 +51,34 @@ class AuthenticationService:
         if "password" not in donor_dict:
             raise Exception(f"Password column not found in donor data")
         
-        # Get the hashed password directly from the dictionary
-        # The password was stored as a string (from hashed_password.decode("utf-8"))
-        # so we need to encode it back to bytes for bcrypt.checkpw()
         hashed_password_str = donor_dict["password"]
         hashed_password_bytes = hashed_password_str.encode('utf-8')
         
-        # Verify the provided password matches the hashed password
-        # bcrypt.checkpw() expects both password and hash as bytes
         if not bcrypt.checkpw(password.encode('utf-8'), hashed_password_bytes):
             raise Exception(f"Invalid password")
-        
+    
         # decode the user's actual name
         name = decode_protobuf_string(user["name"])
         
-        return {
+        # Prepare user data for token generation
+        user_data = {
             "user_name": donor_dict["user_name"],
-            "email": donor_dict["email"],
-            "phone_number": donor_dict["phone_number"],
-            "nic": donor_dict["nic"],
-            "name": name
+            "user_type": "donor"
+        }
+        
+        # Generate JWT token
+        access_token = generate_token(user_data)
+        
+        # Return token and user data
+        return {
+            "access_token": access_token,
+            "token_type": "bearer",
+            "user": {
+                "user_name": donor_dict["user_name"],
+                "email": donor_dict["email"],
+                "phone_number": donor_dict["phone_number"],
+                "nic": donor_dict["nic"],
+                "name": name
+            }
         }
         

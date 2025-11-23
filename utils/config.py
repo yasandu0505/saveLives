@@ -8,6 +8,11 @@ load_dotenv()
 QUERY_API = os.getenv("QUERY_API")
 UPDATE_API = os.getenv("UPDATE_API")
 
+# JWT Configuration
+JWT_SECRET_KEY = os.getenv("JWT_SECRET_KEY")
+JWT_ALGORITHM = "HS256"
+JWT_EXPIRATION_DAYS = 1
+
 # Validate required environment variables
 if not QUERY_API and not UPDATE_API:
     raise ValueError("QUERY_API and UPDATE_API environment variables are not set in .env file")
